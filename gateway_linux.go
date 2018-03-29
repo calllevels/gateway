@@ -6,14 +6,14 @@ import (
 )
 
 func DiscoverGateway() (ip net.IP, err error) {
-	ip, err = discoverGatewayUsingRoute()
+	ip, err = DiscoverGatewayUsingRoute()
 	if err != nil {
-		ip, err = discoverGatewayUsingIp()
+		ip, err = DiscoverGatewayUsingIp()
 	}
 	return
 }
 
-func discoverGatewayUsingIp() (net.IP, error) {
+func DiscoverGatewayUsingIp() (net.IP, error) {
 	routeCmd := exec.Command("ip", "route", "show")
 	output, err := routeCmd.CombinedOutput()
 	if err != nil {
@@ -23,7 +23,7 @@ func discoverGatewayUsingIp() (net.IP, error) {
 	return parseLinuxIPRoute(output)
 }
 
-func discoverGatewayUsingRoute() (net.IP, error) {
+func DiscoverGatewayUsingRoute() (net.IP, error) {
 	routeCmd := exec.Command("route", "-n")
 	output, err := routeCmd.CombinedOutput()
 	if err != nil {
